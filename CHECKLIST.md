@@ -1,0 +1,4 @@
+- the composable takes a `source` argument and keeps up with it's history
+- the undo function set's the `source` to it's previous value
+- the redo function sets the `source` in reverse order after undoing
+- the history never get's larger than it's capacity (even if the capacity is changed with history already present)
