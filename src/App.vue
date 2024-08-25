@@ -5,7 +5,10 @@ import { useTheme, useRefHistory } from "./composables";
 const theme = useTheme("light");
 const capacity = ref(10);
 
-const { undo, redo, history } = useRefHistory(theme, capacity);
+const { undo, redo, history, canUndo, canRedo } = useRefHistory(
+  theme,
+  capacity
+);
 </script>
 <template>
   <div class="page">
@@ -15,8 +18,20 @@ const { undo, redo, history } = useRefHistory(theme, capacity);
         Current Source Value: <strong>{{ theme }}</strong>
       </p>
       <div class="btn-container">
-        <button class="btn btn-primary shrink" @click="undo">Undo</button>
-        <button class="btn btn-secondary shrink" @click="redo">Redo</button>
+        <button
+          class="btn btn-primary shrink"
+          :class="{ 'cursor-not-allowed opacity-50': !canUndo }"
+          @click="undo"
+        >
+          Undo
+        </button>
+        <button
+          class="btn btn-secondary shrink"
+          :class="{ 'cursor-not-allowed opacity-50': !canRedo }"
+          @click="redo"
+        >
+          Redo
+        </button>
         <label>
           Capacity
           <input type="number" v-model="capacity" min="1" />
